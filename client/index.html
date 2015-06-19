@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" ng-app="application">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation for Apps</title>
+    <link href="/assets/css/app.css" rel="stylesheet" type="text/css">
+    <script src="/assets/js/foundation.js"></script>
+    <script src="/assets/js/templates.js"></script>
+    <script src="/assets/js/routes.js"></script>
+    <script src="/assets/js/app.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.0/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.0/mapbox.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  </head>
+  <style>
+    .menu-bar {margin-bottom: 0;}
+    #sub-nav, .messages {border-right: 1px solid #eee;}
+    .medium-grid-content {padding:1rem !important;}
+    .main-content {background: #fff;}
+  </style>
+
+  <body>
+    <div class="grid-frame vertical">
+      <div class="grid-block shrink wrap">
+        <div class="grid-content collapse small-12 medium-6">
+          <ul class="menu-bar dark">
+            <li><a href="#">zTravel</a></li>
+          </ul>
+        </div>
+        <div class="grid-content collapse small-12 medium-6">
+          <ul class="menu-bar dark">
+            <li ui-sref-active="is-active"><a ui-sref="home">Pieces</a></li>
+            <li ui-sref-active="is-active"><a ui-sref="places">Places</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-block">
+        <div class="grid-block show-for-medium medium-6">
+ 
+
+          <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+          <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+          <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
+
+          <div id='map' style="width: 100%; height: 600px;"></div>
+          <script>
+          </script>
+          <script>
+          L.mapbox.accessToken = 'pk.eyJ1IjoibGtiZ2lmdCIsImEiOiJyTERaTml3In0.y2wd_Fi58ux53Wm1Ur1qCg';
+          var map = L.mapbox.map('map', 'mapbox.streets')
+            .setView([38, -102.0], 9);
+          var url = 'http://www.publicart.io/find.geojson?search=new%20york&page=1';
+          var featureLayer = L.mapbox.featureLayer()
+            .loadURL(url)
+            .addTo(map);
+          featureLayer.on('ready', function() {
+            // featureLayer.getBounds() returns the corners of the furthest-out markers,
+            // and map.fitBounds() makes sure that the map contains these.
+            map.fitBounds(featureLayer.getBounds());
+          });
+          </script>
+
+        </div>
+        <div ng-class="['ui-animation']" ui-view class="grid-block small-12 medium-6 wrap main-content">
+          
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
